@@ -1,7 +1,6 @@
 import socket
 
 
-
 class Server:
     def __init__(self, HOST, PORT):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

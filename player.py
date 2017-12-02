@@ -4,7 +4,7 @@ from window import *
 
 STEP = 3
 left = right = up = down = False
-YELLOW = (255, 255, 0)
+
 
 class Player():
 #class Player(Ball):
@@ -46,5 +46,5 @@ class Player():
     def draw(self, window, color = RED):
         self.figure = pygame.draw.circle(window, color, (self.x, self.y), self.radius)
 
-    def draw_opponent(self, window, color = YELLOW):
-        self.figure = pygame.draw.circle(window, color, (self.x, self.y), self.radius)
+    #def draw_opponent(self, window, color = YELLOW):
+    #   self.figure = pygame.draw.circle(window, color, (self.x, self.y), self.radius)

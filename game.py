@@ -17,8 +17,12 @@ player2 = Player(500, 500, YELLOW)
 players.append(player1)
 players.append(player2)
 
-ball = Ball(200, 200)
-objects.append(ball)
+count = 0
+while count < NUM_OF_BALLS:
+    ball_x = random.randint(10, WINDOW_WIDTH - 10)
+    ball_y = random.randint(10, WINDOW_HEIGHT - 10)
+    objects.append(Ball(ball_x, ball_y))
+    count += 1
 
 player1_score = 0
 player2_score = 0
@@ -62,12 +66,11 @@ while work:
     player2.get_x(500)
     player2.get_y(500)
 
-    player1.draw(WINDOW)
-    player2.draw(WINDOW)
-
-
     for obj in objects:
         obj.draw(WINDOW)
+
+    player1.draw(WINDOW)
+    player2.draw(WINDOW)
 
     pygame.display.update()
 

@@ -1,3 +1,4 @@
+import random
 import pygame
 from color import *
 import time
@@ -14,6 +15,7 @@ white = (255, 255, 255)
 pygame.init()
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('WHO IS FASTER')
+
 
 def main_menu(screen):
     done = False
