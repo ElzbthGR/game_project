@@ -1,6 +1,7 @@
 from window import *
 
-class Ball():
+
+class Ball:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -10,3 +11,4 @@ class Ball():
 
     def draw(self, window):
         self.ball = pygame.draw.circle(window, self.color, (self.x, self.y), self.radius)
+

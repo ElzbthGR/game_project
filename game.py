@@ -1,39 +1,43 @@
-from player import  *
+from player import *
 from connection.client import Client
+from balls import Ball
+from window import *
 
 
-HOST = '172.20.10.2'
+HOST = '192.168.1.35'
 PORT = 49055
 
-objects = []
+objects = balls_generation()
 players = []
-work = True
 
-#client = Client(HOST, PORT)
 
-player1 = Player(100, 100)
-player2 = Player(500, 500, YELLOW)
+client = Client(HOST, PORT)
+
+player1 = Player(client.get_self_x0(), client.get_self_y0())
+player2 = Player(client.get_opp_x0(), client.get_opp_y0())
+print(player1.x, "", player1.y)
+print(player2.x, "", player2.y)
+
 
 players.append(player1)
 players.append(player2)
 
-count = 0
-while count < NUM_OF_BALLS:
-    ball_x = random.randint(10, WINDOW_WIDTH - 10)
-    ball_y = random.randint(10, WINDOW_HEIGHT - 10)
-    objects.append(Ball(ball_x, ball_y))
-    count += 1
-
 player1_score = 0
 player2_score = 0
 
+main_menu(WINDOW)
+
 timer = pygame.time.Clock()
+work = True
 while work:
     timer.tick(60)
+    client.check_state(work)
     for e in pygame.event.get():
         if e.type == pygame.QUIT or e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
             work = False
+            client.check_state(work)
             print(player1_score, " ", player2_score)
+            client.stop_connection()
 
         if e.type == pygame.KEYDOWN and e.key == pygame.K_RIGHT:
             right = True
@@ -62,15 +66,24 @@ while work:
                     player2_score += 1
 
     player1.draw(WINDOW, WINDOW_COLOR)
-    player1.moving(right, left, up, down)
-    player2.get_x(500)
-    player2.get_y(500)
+    player2.draw(WINDOW, WINDOW_COLOR)
 
-    for obj in objects:
-        obj.draw(WINDOW)
+    for point in objects:
+        point.draw(WINDOW)
+
+    player1.moving(right, left, up, down)
+    client.send_x(player1.x)
+    client.send_y(player1.y)
+
+    player2.get_x(client.get_opp_x())
+    player2.get_y(client.get_opp_y())
 
     player1.draw(WINDOW)
-    player2.draw(WINDOW)
+    player2.draw(WINDOW, YELLOW)
 
     pygame.display.update()
 
+if player1_score > player2_score:
+    winner("YOU WIN")
+else:
+    winner("YOU LOSE")
